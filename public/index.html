@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق حساب نقاط التأهيل الجامعي للأستاذ الباحث</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="config.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <!-- تحذير عدم الاتصال -->
+    <div class="offline-warning" id="offlineWarning">
+        <i class="fas fa-wifi-slash"></i> <span id="offlineMessage">جارٍ التحقق من الاتصال...</span>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-university"></i> تطبيق حساب نقاط التأهيل الجامعي للأستاذ الباحث</h1>
+            <p>حساب نقاط التأهيل من رتبة أستاذ محاضر صنف "ب" إلى رتبة أستاذ محاضر صنف "أ"</p>
+            <p>بناءً على شبكة التقييم الخاصة بالأستاذ الباحث والقرارات الوزارية المعمول بها</p>
+            <div class="app-status">
+                <span id="connectionStatus">🔗 متصل بالخادم</span>
+                <span id="appVersion" class="version"></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- معلومات التحديث القانوني -->
+        <div class="legal-update-info">
+            <h4><i class="fas fa-gavel"></i> ملاحظة قانونية هامة</h4>
+            <p>هذا التطبيق يعتمد على <strong>شبكة التقييم الخاصة بالأستاذ الباحث</strong> المعتمدة من قبل وزارة التعليم العالي والبحث العلمي.</p>
+            <p>يجب على المرشح نشر مقال إجباري في المجلات ذات الصنف "أ" أو "ب" بالنسبة لميادين العلوم والتكنولوجيا والصنف "أ" أو "ب" أو "ج" بالنسبة لميادين العلوم الإنسانية والاجتماعية.</p>
+        </div>
+
+        <!-- معلومات المطور -->
+        <div class="developer-info">
+            <h4><i class="fas fa-user-tie"></i> معلومات المطور</h4>
+            <p>تم تطوير هذا التطبيق من قبل: <strong>الدكتور شريف بن علي</strong></p>
+            <p>قسم الإعلام الآلي - كلية الرياضيات و الإعلام الآلي - جامعة ميلة</p>
+            <p>البريد الإلكتروني: <a href="mailto:c.benali@centre-univ-mila.dz" style="color: #4ecdc4;">c.benali@centre-univ-mila.dz</a></p>
+            <p class="developer-sub">Dr. Cherif Benali - Computer Science Department - University of Mila</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="tab1">
+                <i class="fas fa-calculator"></i> حاسبة النقاط
+            </button>
+            <button class="tab-btn" data-tab="tab2">
+                <i class="fas fa-file-contract"></i> الوثائق القانونية
+            </button>
+            <button class="tab-btn" data-tab="tab3">
+                <i class="fas fa-info-circle"></i> المعلومات القانونية
+            </button>
+            <button class="tab-btn" data-tab="tab4">
+                <i class="fas fa-tools"></i> الإعدادات
+            </button>
+        </div>
+
+        <div id="tab1" class="tab-content active">
+            <!-- قسم البيانات الشخصية -->
+            <div class="personal-info-section">
+                <h3><i class="fas fa-user-graduate"></i> البيانات الشخصية</h3>
+                <div class="personal-fields">
+                    <div class="personal-input-group">
+                        <label for="firstName">الاسم الأول <span class="required">*</span></label>
+                        <input type="text" id="firstName" placeholder="أدخل الاسم الأول">
+                    </div>
+                    
+                    <div class="personal-input-group">
+                        <label for="lastName">الاسم الأخير <span class="required">*</span></label>
+                        <input type="text" id="lastName" placeholder="أدخل الاسم الأخير">
+                    </div>
+                    
+                    <div class="personal-input-group">
+                        <label for="university">الجامعة</label>
+                        <select id="university" name="university">
+                            <option value="">-- اختر الجامعة --</option>
+                            <option value="جامعة ميلة – Université de Mila – Abdelhafid Boussouf">جامعة ميلة – Université de Mila – Abdelhafid Boussouf</option>
+                            <!-- باقي الجامعات كما في الكود السابق -->
+                            <option value="أخرى">أخرى</option>
+                        </select>
+                    </div>
+                    
+                    <div class="personal-input-group">
+                        <label for="department">القسم/المخبر</label>
+                        <input type="text" id="department" placeholder="أدخل القسم أو المخبر">
+                    </div>
+                    
+                    <div class="personal-input-group">
+                        <label for="specializationField">التخصص الدقيق</label>
+                        <input type="text" id="specializationField" placeholder="أدخل التخصص الدقيق">
+                    </div>
+                    
+                    <div class="personal-input-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" placeholder="example@univ.dz">
+                    </div>
+                </div>
+            </div>
+            
+            <h2 style="color: #1a5f7a; margin-bottom: 25px; text-align: center;">
+                <i class="fas fa-calculator"></i> حاسبة نقاط التأهيل الجامعي للأستاذ الباحث
+            </h2>
+            
+            <!-- عرض تصنيفات المجلات -->
+            <div class="journal-categories">
+                <h4><i class="fas fa-journal-whills"></i> تصنيفات المجلات العلمية ونقاطها</h4>
+                <div class="category-grid">
+                    <div class="category-item a-plus">
+                        <div style="font-weight: bold; color: #2e7d32;">الصنف أ+</div>
+                        <div class="category-points" style="color: #2e7d32;">100 نقطة</div>
+                        <div style="font-size: 12px; margin-top: 5px;">الدولية المتقدمة</div>
+                    </div>
+                    <div class="category-item a">
+                        <div style="font-weight: bold; color: #1565c0;">الصنف أ</div>
+                        <div class="category-points" style="color: #1565c0;">90 نقطة</div>
+                        <div style="font-size: 12px; margin-top: 5px;">الدولية الممتازة</div>
+                    </div>
+                    <div class="category-item b">
+                        <div style="font-weight: bold; color: #ef6c00;">الصنف ب</div>
+                        <div class="category-points" style="color: #ef6c00;">60 نقطة</div>
+                        <div style="font-size: 12px; margin-top: 5px;">الدولية الجيدة</div>
+                    </div>
+                    <div class="category-item c">
+                        <div style="font-weight: bold; color: #7b1fa2;">الصنف ج</div>
+                        <div class="category-points" style="color: #7b1fa2;">40 نقطة</div>
+                        <div style="font-size: 12px; margin-top: 5px;">(80 نقطة على الأكثر)</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 15px; font-size: 13px; color: #666;">
+                    <i class="fas fa-info-circle"></i> نقاط المجلات حسب شبكة التقييم الخاصة بالأستاذ الباحث
+                </div>
+            </div>
+            
+            <div class="calculator-section">
+                <div>
+                    <!-- قسم التعليم (البيداغوجيا) -->
+                    <h3 class="section-title"><i class="fas fa-chalkboard-teacher"></i> 1 - البيداغوجيا</h3>
+                    
+                    <h4 style="color: #1a5f7a; margin: 15px 0 10px 0;">أ- التعليم:</h4>
+                    
+                    <div class="input-group">
+                        <label for="teachingYears">عدد سنوات التدريس <span class="required">*</span></label>
+                        <input type="number" id="teachingYears" min="0" max="50" value="3">
+                        <div class="note">الحد الأدنى المطلوب: 3 سنوات نشاط فعلي</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="lessonsPerYear">الدروس في السنة <span class="tooltip">(?)
+                            <span class="tooltiptext">الدروس: 15 نقطة/السنة (45 نقطة على الأكثر)</span>
+                        </span></label>
+                        <input type="number" id="lessonsPerYear" min="0" max="50" value="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="guidedWorks">الأعمال الموجهة في السنة <span class="tooltip">(?)
+                            <span class="tooltiptext">الأعمال الموجهة: 8 نقاط/السنة (24 نقطة على الأكثر)</span>
+                        </span></label>
+                        <input type="number" id="guidedWorks" min="0" max="50" value="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="practicalWorks">الأعمال التطبيقية في السنة <span class="tooltip">(?)
+                            <span class="tooltiptext">الأعمال التطبيقية: 5 نقاط/السنة (15 نقطة على الأكثر)</span>
+                        </span></label>
+                        <input type="number" id="practicalWorks" min="0" max="50" value="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="onlineLessons">دروس عبر الخط مصادق عليها</label>
+                        <input type="number" id="onlineLessons" min="0" max="20" value="0">
+                        <div class="note">15 نقطة للدورة الواحدة</div>
+                    </div>
+                    
+                    <h4 style="color: #1a5f7a; margin: 20px 0 10px 0;">ب- النشاطات البيداغوجية:</h4>
+                    
+                    <div class="input-group">
+                        <label for="printedLessons">مطبوعة دروس مصادق عليها</label>
+                        <input type="number" id="printedLessons" min="0" max="10" value="0">
+                        <div class="note">12 نقطة/المطبوعة (24 نقطة على الأكثر)</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="pedagogicalPublications">نشر مؤلفات بيداغوجية</label>
+                        <input type="number" id="pedagogicalPublications" min="0" max="10" value="0">
+                        <div class="note">30 نقطة للمؤلف الواحد</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="supervisionYears">القيام بالوصاية (سنوات)</label>
+                        <input type="number" id="supervisionYears" min="0" max="10" value="0">
+                        <div class="note">3 نقاط/السنة (9 نقاط على الأكثر)</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="internshipFollowUp">متابعة الطلبة المتربصين (سنوات)</label>
+                        <input type="number" id="internshipFollowUp" min="0" max="10" value="0">
+                        <div class="note">6 نقاط/السنة (18 نقطة على الأكثر)</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="universityEnvironment">المشاركة في العلاقة بين الجامعة والمحيط</label>
+                        <input type="number" id="universityEnvironment" min="0" max="5" value="0">
+                        <div class="note">5 نقاط للمشاركة الواحدة</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="pedagogicalAnimation">المشاركة في التنشيط البيداغوجي</label>
+                        <input type="number" id="pedagogicalAnimation" min="0" max="10" value="0">
+                        <div class="note">5 نقاط للمشاركة الواحدة</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="thesisSupervision">تأطير مذكرات (ليسانس، ماستر، ماجيستير)</label>
+                        <input type="number" id="thesisSupervision" min="0" max="20" value="0">
+                        <div class="note">9 نقاط/المذكرة (27 نقطة على الأكثر)</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <!-- قسم نشاطات البحث -->
+                    <h3 class="section-title"><i class="fas fa-flask"></i> 2 - نشاطات البحث</h3>
+                    
+                    <div class="input-group">
+                        <label for="specialization">التخصص الرئيسي <span class="required">*</span></label>
+                        <select id="specialization">
+                            <option value="sciences">العلوم والتكنولوجيا</option>
+                            <option value="humanities">العلوم الإنسانية والاجتماعية</option>
+                        </select>
+                        <div class="note">المجلات المطلوبة: الصنف "أ" أو "ب" للعلوم والتكنولوجيا، الصنف "أ" أو "ب" أو "ج" للعلوم الإنسانية</div>
+                    </div>
+                    
+                    <!-- قسم المنشورات العلمية -->
+                    <h4 style="color: #1a5f7a; margin: 20px 0 10px 0;">المنشورات العلمية:</h4>
+                    
+                    <!-- صنف A+ -->
+                    <div class="input-group">
+                        <label for="categoryAPlus">مقالات في مجلات الصنف "أ+" الدولية <span class="tooltip">(?)
+                            <span class="tooltiptext">منشورات دولية من الصنف "أ+" فما فوق: 100 نقطة/المنشور</span>
+                        </span></label>
+                        <div class="author-fields">
+                            <div class="author-field">
+                                <label>كمؤلف أول (100%)</label>
+                                <input type="number" id="categoryAPlusFirst" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                            <div class="author-field">
+                                <label>كمؤلف ثاني (50%)</label>
+                                <input type="number" id="categoryAPlusSecond" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                            <div class="author-field">
+                                <label>كمؤلف ثالث فأكثر (25%)</label>
+                                <input type="number" id="categoryAPlusThird" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="publication-summary">
+                            <div>المجموع: <span id="categoryAPlusTotal">0</span> مقال</div>
+                            <div>النقاط المحتملة: <span id="categoryAPlusPoints">0</span> نقطة</div>
+                        </div>
+                    </div>
+                    
+                    <!-- صنف A -->
+                    <div class="input-group">
+                        <label for="categoryA">مقالات في مجلات الصنف "أ" الدولية <span class="tooltip">(?)
+                            <span class="tooltiptext">منشورات دولية من الصنف "أ": 90 نقطة/المنشور</span>
+                        </span></label>
+                        <div class="author-fields">
+                            <div class="author-field">
+                                <label>كمؤلف أول (100%)</label>
+                                <input type="number" id="categoryAFirst" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                            <div class="author-field">
+                                <label>كمؤلف ثاني (50%)</label>
+                                <input type="number" id="categoryASecond" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                            <div class="author-field">
+                                <label>كمؤلف ثالث فأكثر (25%)</label>
+                                <input type="number" id="categoryAThird" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="publication-summary">
+                            <div>المجموع: <span id="categoryATotal">0</span> مقال</div>
+                            <div>النقاط المحتملة: <span id="categoryAPoints">0</span> نقطة</div>
+                        </div>
+                    </div>
+                    
+                    <!-- صنف B -->
+                    <div class="input-group">
+                        <label for="categoryB">مقالات في مجلات الصنف "ب" الدولية <span class="tooltip">(?)
+                            <span class="tooltiptext">منشورات دولية من الصنف "ب": 60 نقطة/المنشور</span>
+                        </span></label>
+                        <div class="author-fields">
+                            <div class="author-field">
+                                <label>كمؤلف أول (100%)</label>
+                                <input type="number" id="categoryBFirst" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                            <div class="author-field">
+                                <label>كمؤلف ثاني (50%)</label>
+                                <input type="number" id="categoryBSecond" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                            <div class="author-field">
+                                <label>كمؤلف ثالث فأكثر (25%)</label>
+                                <input type="number" id="categoryBThird" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="publication-summary">
+                            <div>المجموع: <span id="categoryBTotal">0</span> مقال</div>
+                            <div>النقاط المحتملة: <span id="categoryBPoints">0</span> نقطة</div>
+                        </div>
+                    </div>
+                    
+                    <!-- صنف C -->
+                    <div class="input-group">
+                        <label for="categoryC">مقالات في مجلات الصنف "ج" الوطنية <span class="tooltip">(?)
+                            <span class="tooltiptext">منشورات وطنية من الصنف "ج": 40 نقطة/المنشور (80 نقطة على الأكثر)</span>
+                        </span></label>
+                        <div class="author-fields">
+                            <div class="author-field">
+                                <label>كمؤلف أول (100%)</label>
+                                <input type="number" id="categoryCFirst" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                            <div class="author-field">
+                                <label>كمؤلف ثاني (50%)</label>
+                                <input type="number" id="categoryCSecond" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                            <div class="author-field">
+                                <label>كمؤلف ثالث فأكثر (25%)</label>
+                                <input type="number" id="categoryCThird" min="0" max="20" value="0" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="publication-summary">
+                            <div>المجموع: <span id="categoryCTotal">0</span> مقال</div>
+                            <div>النقاط المحتملة: <span id="categoryCPoints">0</span> نقطة</div>
+                        </div>
+                    </div>
+                    
+                    <!-- براءات الاختراع -->
+                    <div class="input-group">
+                        <label for="internationalPatents">براءات اختراع دولية (OMPI)</label>
+                        <input type="number" id="internationalPatents" min="0" max="10" value="0">
+                        <div class="note">40 نقطة لبراءة الاختراع الواحدة</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="nationalPatents">براءات اختراع وطنية (INAPI)</label>
+                        <input type="number" id="nationalPatents" min="0" max="10" value="0">
+                        <div class="note">20 نقطة لبراءة الاختراع الواحدة</div>
+                    </div>
+                    
+                    <!-- المؤتمرات والمداخلات -->
+                    <div class="input-group">
+                        <label for="internationalConferences">المداخلات الدولية <span class="tooltip">(?)
+                            <span class="tooltiptext">مداخلات دولية: 20 نقطة/المداخلة (40 نقطة على الأكثر) + 5 نقاط إضافية إذا كانت في proceedings مفهرسة</span>
+                        </span></label>
+                        <input type="number" id="internationalConferences" min="0" max="20" value="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="indexedProceedings">مداخلات دولية في proceedings مفهرسة</label>
+                        <input type="number" id="indexedProceedings" min="0" max="10" value="0">
+                        <div class="note">5 نقاط إضافية لكل مداخلة في SCOPUS أو WOS</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="nationalConferences">المداخلات الوطنية</label>
+                        <input type="number" id="nationalConferences" min="0" max="20" value="0">
+                        <div class="note">10 نقاط للمداخلة الواحدة (20 نقطة على الأكثر)</div>
+                    </div>
+                    
+                    <!-- أنشطة بحثية أخرى -->
+                    <div class="input-group">
+                        <label for="phdSupervision">الإشراف على أطروحات الدكتوراه</label>
+                        <input type="number" id="phdSupervision" min="0" max="10" value="0">
+                        <div class="note">20 نقطة لأطروحة الدكتوراه الواحدة</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="scientificPublications">نشر مؤلفات علمية في التخصص</label>
+                        <input type="number" id="scientificPublications" min="0" max="10" value="0">
+                        <div class="note">20 نقطة للمؤلف الواحد</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="phdTraining">المشاركة في التكوين في الدكتوراه</label>
+                        <input type="number" id="phdTraining" min="0" max="10" value="0">
+                        <div class="note">15 نقطة للمشاركة الواحدة</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="eventOrganization">المشاركة في تنظيم نشاط علمي</label>
+                        <input type="number" id="eventOrganization" min="0" max="10" value="0">
+                        <div class="note">5 نقاط/المشاركة (10 نقاط على الأكثر)</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="internationalProjects">مشاريع تعاون دولية</label>
+                        <input type="number" id="internationalProjects" min="0" max="10" value="0">
+                        <div class="note">5 نقاط/المشاركة (10 نقاط على الأكثر)</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="scientificActivities">المشاركة في النشاطات العلمية (خبرة، إلخ)</label>
+                        <input type="number" id="scientificActivities" min="0" max="10" value="0">
+                        <div class="note">5 نقاط/المشاركة (15 نقاط على الأكثر)</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="researchActivities">المشاركة في نشاطات البحث (PNR، PRFU)</label>
+                        <input type="number" id="researchActivities" min="0" max="10" value="0">
+                        <div class="note">5 نقاط/المشاركة (10 نقاط على الأكثر)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ملاحظات مهمة -->
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> ملاحظات هامة:</h4>
+                <ul>
+                    <li>نشر المقال <strong>إجباري</strong> في المجلات ذات الصنف "أ" أو "ب" بالنسبة لميادين العلوم والتكنولوجيا والصنف "أ" أو "ب" أو "ج" بالنسبة لميادين العلوم الإنسانية والاجتماعية.</li>
+                    <li>المقالات المنشورة في مجلات مقتربة أولى محرر مقترب تعتبر <strong>غير مقبولة</strong>.</li>
+                    <li>يجب على المرشح أن يبرر مركزه بين المؤلفين المشاركين بالنسبة للمجالات التي تعتمد الترتيب الأبجدي.</li>
+                    <li>يتم احتساب نقاط المؤلفين كالتالي: المؤلف الأول (100%)، المؤلف الثاني (50%)، المؤلف الثالث فأكثر (25%).</li>
+                </ul>
+            </div>
+            
+            <div class="points-summary">
+                <h3><i class="fas fa-chart-bar"></i> ملخص النقاط المحسوبة</h3>
+                <div id="pointsSummary">
+                    <div style="text-align: center; color: #666; padding: 20px;">
+                        <i class="fas fa-calculator"></i><br>
+                        أدخل البيانات ثم اضغط على "حساب النقاط"
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-box">
+                <h3>النقاط الإجمالية المحسوبة</h3>
+                <div class="total-points" id="totalPoints">0</div>
+                <div id="eligibilityStatus" class="status not-eligible">غير مؤهل للتأهيل</div>
+                <p style="margin-top: 15px;">الحد الأدنى المطلوب للتأهيل: <strong>350 نقطة</strong></p>
+                <p style="margin-top: 10px; font-size: 14px; color: #666;">
+                    <i class="fas fa-info-circle"></i> بناءً على شبكة التقييم الخاصة بالأستاذ الباحث
+                </p>
+            </div>
+            
+            <!-- أزرار الإجراءات -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="calculateBtn">
+                    <i class="fas fa-calculator"></i> حساب النقاط
+                </button>
+                <button class="btn btn-success" id="saveData">
+                    <i class="fas fa-save"></i> حفظ البيانات محلياً
+                </button>
+                <button class="btn btn-html" id="exportHtml">
+                    <i class="fas fa-file-export"></i> تصدير HTML
+                </button>
+                <button class="btn btn-export" id="exportJson">
+                    <i class="fas fa-file-export"></i> تصدير كـ JSON
+                </button>
+                <button class="btn btn-secondary" id="importJson">
+                    <i class="fas fa-file-import"></i> استيراد من JSON
+                </button>
+                <button class="btn btn-primary" id="resetBtn">
+                    <i class="fas fa-redo"></i> إعادة تعيين
+                </button>
+                <button class="btn btn-info" id="testConnectionBtn">
+                    <i class="fas fa-wifi"></i> اختبار الاتصال
+                </button>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <div class="legal-doc-content">
+                <h3><i class="fas fa-file-contract"></i> شبكة التقييم من أجل الحصول على التأهيل الجامعي بالنسبة للأستاذ الباحث</h3>
+                
+                <div class="highlight-box">
+                    <h4>ملاحظة هامة:</h4>
+                    <p>هذه الشبكة خاصة <strong>بالأستاذ الباحث</strong> وليست للباحث الدائم. يجب مراعاة الفروق في النقاط والمتطلبات.</p>
+                </div>
+                
+                <!-- ... نفس محتوى الوثائق القانونية ... -->
+                
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-content">
+            <div class="legal-doc-content">
+                <h3><i class="fas fa-gavel"></i> المعلومات القانونية والنظامية</h3>
+                <p>القرارات الوزارية المنظمة للتأهيل الجامعي</p>
+                
+                <!-- ... نفس محتوى المعلومات القانونية ... -->
+                
+            </div>
+        </div>
+
+        <div id="tab4" class="tab-content">
+            <div class="settings-content">
+                <h3><i class="fas fa-tools"></i> إعدادات التطبيق</h3>
+                
+                <div class="settings-section">
+                    <h4><i class="fas fa-server"></i> إعدادات الخادم</h4>
+                    <div class="input-group">
+                        <label for="workerUrl">رابط Cloudflare Worker</label>
+                        <input type="text" id="workerUrl" value="" placeholder="https://your-worker.workers.dev">
+                        <div class="note">سيتم حفظ هذا الإعداد في المتصفح فقط</div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="saveSettings">
+                        <i class="fas fa-save"></i> حفظ الإعدادات
+                    </button>
+                    <button class="btn btn-secondary" id="resetSettings">
+                        <i class="fas fa-undo"></i> استعادة الافتراضية
+                    </button>
+                </div>
+                
+                <div class="settings-section">
+                    <h4><i class="fas fa-info-circle"></i> معلومات التطبيق</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">الإصدار:</span>
+                            <span id="appVersionInfo">1.0.0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">حالة الاتصال:</span>
+                            <span id="connectionStatusInfo">🔗 غير معروفة</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">آخر حساب:</span>
+                            <span id="lastCalculationInfo">لم يتم الحساب بعد</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">البيانات المحفوظة:</span>
+                            <span id="savedDataInfo">لا يوجد</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h4><i class="fas fa-database"></i> إدارة البيانات</h4>
+                    <button class="btn btn-success" id="backupData">
+                        <i class="fas fa-download"></i> نسخ احتياطي للبيانات
+                    </button>
+                    <button class="btn btn-warning" id="restoreData">
+                        <i class="fas fa-upload"></i> استعادة بيانات
+                    </button>
+                    <button class="btn btn-danger" id="clearAllData">
+                        <i class="fas fa-trash"></i> حذف جميع البيانات
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>هذا الموقع و المحتوى غير رسمي ولا يمثل أي جهة رسمية.</p>
+            <p>تطبيق حساب نقاط التأهيل الجامعي للأستاذ الباحث - بناءً على شبكة التقييم المعتمدة</p>
+            <p>تم التطوير من قبل: <strong>الدكتور شريف بن علي</strong> - جامعة ميلة</p>
+            <p style="margin-top: 15px; font-size: 12px; color: #888;">
+                <i class="fas fa-code"></i> تم التطوير باستخدام HTML5, CSS3 & JavaScript | 
+                <i class="fas fa-user-graduate"></i> المطور: د. شريف بن علي - جامعة ميلة |
+                <i class="fas fa-cloud"></i> مستضاف على GitHub Pages + Cloudflare Workers
+            </p>
+        </div>
+    </footer>
+
+    <!-- عناصر مخفية للاستخدام -->
+    <input type="file" id="fileImport" style="display: none;" accept=".json">
+    <input type="file" id="fileRestore" style="display: none;" accept=".json">
+    
+    <!-- عنصر التحميل -->
+    <div id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>جارٍ المعالجة...</p>
+        </div>
+    </div>
+</body>
+</html>

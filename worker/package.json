@@ -1,0 +1,26 @@
+{
+  "name": "university-qualification-worker",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker for University Qualification Points Calculator",
+  "main": "worker.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "cloudflare-workers",
+    "university",
+    "qualification",
+    "calculator",
+    "algeria"
+  ],
+  "author": "Dr. Cherif Benali <c.benali@centre-univ-mila.dz>",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

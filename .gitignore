@@ -1,0 +1,68 @@
+
+---
+
+## 📄 **10. ملف .gitignore - `.gitignore`**
+
+```gitignore
+# التبعيات
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# بيئات التشغيل
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ملفات النظام
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ملفات النشر
+dist/
+build/
+
+# Cloudflare
+.wrangler/
+.dev.vars
+
+# GitHub Pages
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# ملفات مؤقتة
+tmp/
+temp/
+*.tmp
+*.temp
+
+# ملفات النسخ الاحتياطي
+*.backup
+*.bak
+
+# ملفات السجلات
+*.log
+logs/
+
+# ملفات النظام التشغيلي
+*.pid
+*.seed
+*.pid.lock
+
+# ملفات التغطية
+coverage/
+.nyc_output
+
+# ملفات الاختبار
+*.tap
